@@ -5,8 +5,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
-// Clase principal iniciadora del programa ejemplo aprenderaprogramar.com
+
+
+
 public class Database {
 
     static final String DB_URL
@@ -14,7 +17,7 @@ public class Database {
     static final String DB_USER = "root";
     static final String DB_PASSWD = "MysqL";
 
-    public void lecturaUsuario() {
+    public void leerUsuario() {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -23,9 +26,13 @@ public class Database {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM Usuarios ");
-            NodeGeneric< String> head, newN, ref;
-            head = null;
-            while (resultSet.next()) {
+            //NodeGeneric< String> head, newN, ref;
+            //head = null;
+            //StackGeneric <String> stack =  new StackGeneric<String>(100000);
+            BinarySearchTree tree = new BinarySearchTree();
+            int i = 0;
+            while (i<100000 && resultSet.next()) {
+                i++;
                 String suma = "";
                 suma += resultSet.getString(1) + ";";
                 suma += resultSet.getString(2) + ";";
@@ -34,17 +41,26 @@ public class Database {
                 suma += resultSet.getString(5) + ";";
                 suma += resultSet.getString(6) + ";";
                 suma += resultSet.getString(7);
-
-                newN = new NodeGeneric< String>(suma);
-                newN.setNext(head);
-                head = newN;
+                
+                tree.insertBST(suma);
             }
+            tree.traverseBST();
+                
+                
+                //stack.push(suma);
+                /*newN = new NodeGeneric< String>(suma);
+                newN.setNext(head);
+                head = newN;*/
+            
+            //while(!stack.empty()){
+                //System.out.println(stack.pop());
+            //}
             /*ref = head;
             if (ref.Delete(head, "50000;Merle;MerleRobles@unal.edu.co;+57 (826) 513-3942;333 Matthews Place, Bogotá, Bogota D.C., 2863;2019-07-09T06:51:18 +05:00;Humanas")) {
                 System.out.println("True");
             } else {
                 System.out.println("False");
-            }*/
+            }
 
             ref = head;
             int i = 0;
@@ -75,7 +91,218 @@ public class Database {
             }
         }
     }
+    
+    public void agregarUsuario() {
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            //Scanner sc = new Scanner(System.in);
+            //int num1 = sc.nextInt();
+            //String num2 = sc.nextLine();
+            //String num3 = sc.nextLine();
+            //String num4 = sc.nextLine();
+            //String num5 = sc.nextLine();
+            //String num6 = sc.nextLine();
+            //String num7 = sc.nextLine();
+            // statement.executeUpdate("INSERT INTO usuarios VALUES (" + num1 + "," + num2 + "," + num3 + "," + num4 + "," + num5 + "," + num6 + "," + num7 + ")");
+            statement.executeUpdate("INSERT INTO usuarios VALUES (100000,'a','b','c','d','e','f')");
+            //NodeGeneric< String> head, newN, ref;
+            //head = null;
+            //StackGeneric <String> stack =  new StackGeneric<String>(100000);
+        } catch (SQLException ex) {
+            System.out.println("Error en SQL" + ex);
+        } finally {
+            try {
+                statement.close();
+                connection.close();
 
+            } catch (SQLException ex) {
+
+            }
+        }
+    }
+   
+    public void borrarUsuario() {
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            //Scanner sc = new Scanner(System.in);
+            //int num1 = sc.nextInt();
+            //String num2 = sc.nextLine();
+            //String num3 = sc.nextLine();
+            //String num4 = sc.nextLine();
+            //String num5 = sc.nextLine();
+            //String num6 = sc.nextLine();
+            //String num7 = sc.nextLine();
+            // statement.executeUpdate("INSERT INTO usuarios VALUES (" + num1 + "," + num2 + "," + num3 + "," + num4 + "," + num5 + "," + num6 + "," + num7 + ")");
+            statement.executeUpdate("DELETE FROM usuarios WHERE usuarios.index=100000");
+            //NodeGeneric< String> head, newN, ref;
+            //head = null;
+            //StackGeneric <String> stack =  new StackGeneric<String>(100000);
+        } catch (SQLException ex) {
+            System.out.println("Error en SQL" + ex);
+        } finally {
+            try {
+                statement.close();
+                connection.close();
+
+            } catch (SQLException ex) {
+
+            }
+        }
+    }
+    
+    public void buscarUsuario() {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = null;
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Usuarios ");
+            //NodeGeneric< String> head, newN, ref;
+            //head = null;
+            //StackGeneric <String> stack =  new StackGeneric<String>(100000);
+            BinarySearchTree tree = new BinarySearchTree();
+            int i = 0;
+            while (i<10 && resultSet.next()) {
+                i++;
+                String suma = "";
+                suma += resultSet.getString(2);
+                tree.insertBST(suma);
+            }
+            tree.SearchBST("Sosa");
+            //Scanner sc = new Scanner(System.in);
+            //String string = sc.nextLine();
+            //tree.SearchBST(string);
+            
+                
+                
+                //stack.push(suma);
+                /*newN = new NodeGeneric< String>(suma);
+                newN.setNext(head);
+                head = newN;*/
+            
+            //while(!stack.empty()){
+                //System.out.println(stack.pop());
+            //}
+            /*ref = head;
+            if (ref.Delete(head, "50000;Merle;MerleRobles@unal.edu.co;+57 (826) 513-3942;333 Matthews Place, Bogotá, Bogota D.C., 2863;2019-07-09T06:51:18 +05:00;Humanas")) {
+                System.out.println("True");
+            } else {
+                System.out.println("False");
+            }
+
+            ref = head;
+            int i = 0;
+            while(ref != null) {
+                i++;
+                System.out.println(ref.getData());
+                ref = ref.getNext();
+            }
+
+            /*10000;Muriel;MurielLangley@unal.edu.co;+57 (809) 596-4000;397 Channel Avenue, Bogotá, Bogota D.C., 4421;2014-01-20T11:34:23 +05:00;Ingenieria*/
+            /*listarray.search("99999;Kirsten;KirstenRivas@unal.edu.co;+57 (892) 402-3415;463 Adler Place, Bogotá, Bogota D.C., 3104;2014-05-24T11:00:45 +05:00;Ciencias-Economicas");
+            /*listarray.search("50000;Merle;MerleRobles@unal.edu.co;+57 (826) 513-3942;333 Matthews Place, Bogotá, Bogota D.C., 2863;2019-07-09T06:51:18 +05:00;Humanas");
+            /*listarray.delete("0;England;EnglandKeith@unal.edu.co;+57 (810) 576-3028;937 Bridge Street, Bogotá, Bogota D.C., 6864;2019-11-11T12:27:54 +05:00;Ciencias-Economicas");
+            /*System.out.println("Carga");
+            while (!queue.empty()) {
+                queue.dequeue();
+            }*/
+        } catch (SQLException ex) {
+            System.out.println("Error en SQL" + ex);
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+
+            } catch (SQLException ex) {
+
+            }
+        }
+    }
+    
+    public void lecturaProducto() {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = null;
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Productos ");
+            //NodeGeneric< String> head, newN, ref;
+            //head = null;
+            //StackGeneric <String> stack =  new StackGeneric<String>(100000);
+            BinarySearchTree tree = new BinarySearchTree();
+    
+            while (resultSet.next()) {
+
+                String suma = "";
+                suma += resultSet.getString(1) + ";";
+                suma += resultSet.getString(2) + ";";
+                suma += resultSet.getString(3) + ";";
+                suma += resultSet.getString(4) + ";";
+                suma += resultSet.getString(5);
+                
+                tree.insertBST(suma);
+            }
+            tree.traverseBST();
+            
+
+            
+                
+                
+                //stack.push(suma);
+                /*newN = new NodeGeneric< String>(suma);
+                newN.setNext(head);
+                head = newN;*/
+            
+            //while(!stack.empty()){
+                //System.out.println(stack.pop());
+            //}
+            /*ref = head;
+            if (ref.Delete(head, "50000;Merle;MerleRobles@unal.edu.co;+57 (826) 513-3942;333 Matthews Place, Bogotá, Bogota D.C., 2863;2019-07-09T06:51:18 +05:00;Humanas")) {
+                System.out.println("True");
+            } else {
+                System.out.println("False");
+            }
+
+            ref = head;
+            int i = 0;
+            while(ref != null) {
+                i++;
+                System.out.println(ref.getData());
+                ref = ref.getNext();
+            }
+
+            /*10000;Muriel;MurielLangley@unal.edu.co;+57 (809) 596-4000;397 Channel Avenue, Bogotá, Bogota D.C., 4421;2014-01-20T11:34:23 +05:00;Ingenieria*/
+            /*listarray.search("99999;Kirsten;KirstenRivas@unal.edu.co;+57 (892) 402-3415;463 Adler Place, Bogotá, Bogota D.C., 3104;2014-05-24T11:00:45 +05:00;Ciencias-Economicas");
+            /*listarray.search("50000;Merle;MerleRobles@unal.edu.co;+57 (826) 513-3942;333 Matthews Place, Bogotá, Bogota D.C., 2863;2019-07-09T06:51:18 +05:00;Humanas");
+            /*listarray.delete("0;England;EnglandKeith@unal.edu.co;+57 (810) 576-3028;937 Bridge Street, Bogotá, Bogota D.C., 6864;2019-11-11T12:27:54 +05:00;Ciencias-Economicas");
+            /*System.out.println("Carga");
+            while (!queue.empty()) {
+                queue.dequeue();
+            }*/
+        } catch (SQLException ex) {
+            System.out.println("Error en SQL" + ex);
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+
+            } catch (SQLException ex) {
+
+            }
+        }
+    }
     class StackGeneric<T> {
 
         private static final int N = 3;
@@ -288,33 +515,6 @@ public class Database {
         public void setNext(NodeGeneric<T> next) {
             this.next = next;
         }
-        T reference;
-
-        /*public boolean compareTo(T val) {
-            int result;
-            if (reference.compareTo(val) == 0) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        public boolean Delete(NodeGeneric<T> head, T val) {
-            /*NodeGeneric<T> helper = new NodeGeneric<T>();
-            helper.next = head;
-            NodeGeneric<T> p = head;
-            System.out.println(val);
-            while (p.next != null) {
-                System.out.println(p.data);
-                if (p.compareTo(val) == true) {
-                    p.next = p.next.next;
-                    return true;
-                } else {
-                    p = p.next;
-                }
-            }
-            return false;
-        }*/
     }
 
     public class LinkedListGeneric<T extends Comparable<T>> {
@@ -369,3 +569,141 @@ public class Database {
         }
     }
 }
+
+
+class BinarySearchTree {
+
+    private Node root;
+
+    public BinarySearchTree() {
+        root = null;
+    }
+
+    void insertBST(String value) {
+        root = insert(value, root);
+    }
+
+    Node insert(String value, Node p) {
+        if (p == null) {
+            p = new Node(value);
+        } else if (value.compareTo(p.data) < 0) {
+            p.left = insert(value, p.left);
+        } else if (value.compareTo(p.data) > 0) {
+            p.right = insert(value, p.right);
+        //} else {
+            //System.out.println("Item in tree and not inserted.");
+        }
+        return p;
+    }
+
+    void removeBST(String value) {
+        root = remove(value, root);
+    }
+
+    Node remove(String value, Node p) {
+        if (p != null) {
+            if (value.compareTo(p.data) < 0) {
+                p.left = remove(value, p.left);
+            } else if (value.compareTo(p.data) > 0) {
+                p.right = remove(value, p.right);
+            } else if (p.left == null && p.right == null) {
+                p = null;
+            } else if (p.left == null) {
+                p = p.right;
+            } else if (p.right == null) {
+                p = p.left;
+            } else {
+                Node t = findMin(p.right);
+                p.data = t.data;
+                p.right = remove(p.data, p.right);
+            }
+        } else {
+            System.out.println("Item not in tree and not removed");
+        }
+        return p;
+    }
+
+    Node findMin(Node p) {
+        if (p != null) {
+            while (p.left != null) {
+                p = p.left;
+            }
+        }
+        return p;
+
+    }
+
+    void traverseBST() {
+        System.out.print("The tree is:");
+        if (root != null) {
+            traverse(root);
+        } else {
+            System.out.print(" " + "Empty");
+            System.out.println();
+        }
+    }
+
+    void traverse(Node ptr) {
+        if (ptr.left != null) {
+            traverse(ptr.left);
+        }
+        System.out.println(" " + ptr.data);
+        if (ptr.right != null) {
+            traverse(ptr.right);
+        }
+    }
+
+//Inner Class: Node
+    class Node {
+
+        Node left;
+        String data;
+        Node right;
+
+        Node() {
+            this("");
+        }
+
+        Node(String data) {
+            left = null;
+            this.data = data;
+            right = null;
+        }
+    }
+    
+    void SearchBST(String value) {
+        InOrder(Search(value, root, root));
+    }
+
+    Node Search(String value, Node p, Node par) {
+        Node ptr;
+        if (p != null) {
+            if (value.compareTo(p.data) < 0) {
+                p = Search(value, p.left, p);
+            } else if (value.compareTo(p.data) > 0) {
+                p = Search(value, p.right, p);
+            } else {
+                return p;
+            }
+        } else {
+            System.out.println("Item not in tree");
+            return par;
+        }
+        return p;
+    }
+
+    void InOrder(Node ptr) {
+        if (ptr.left != null && ptr.right != null) {
+            //   System.out.print("(");
+            InOrder(ptr.left);
+        }
+
+        System.out.print(" " + ptr.data + " ");
+        if (ptr.left != null && ptr.right != null) {
+            InOrder(ptr.right);
+        }
+        //   System.out.print(")");
+
+    }
+}
+
