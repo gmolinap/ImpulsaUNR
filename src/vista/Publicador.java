@@ -29,8 +29,6 @@ public class Publicador extends javax.swing.JFrame {
      */
     public Publicador() {
         initComponents();
-        Connect();
-        table_update();
     }
 Connection con;
 PreparedStatement pst;
@@ -122,6 +120,12 @@ PreparedStatement pst;
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setHeaderValue("Id");
+            jTable1.getColumnModel().getColumn(1).setHeaderValue("Name");
+            jTable1.getColumnModel().getColumn(2).setHeaderValue("Address");
+            jTable1.getColumnModel().getColumn(3).setHeaderValue("Phone");
+        }
 
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Direccion");
@@ -254,22 +258,6 @@ PreparedStatement pst;
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    public void Connect()
-    {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-              con = DriverManager.getConnection("jdbc:mysql://localhost/slibr","root","");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Publicador.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Publicador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-           
-        
-    }
-    
-    
     
     
      private void table_update()
